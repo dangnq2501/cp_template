@@ -20,15 +20,21 @@ int main()
     {
         ofstream inp((NAME + ".inp").c_str());
         string s;
-        int n = Rand(5, 10);
+        int n = Rand(10, 30);
+        int prim[5] = {2, 3, 5, 7, 11};
+        int pr = prim[Rand(0, 4)];
+        inp << pr << '\n';
         for(int i = 1; i <= n; i ++){
-            s.push_back(char('a'+Rand(0, 2)));
+            s.push_back(char('0'+Rand(0, 9)));
         }
-        inp << n << '\n' << s;
+        inp << s << '\n' << n<<'\n';
+        for(int i = 1; i <= n; i ++){
+            int l = Rand(1, n/2), r = Rand(n/2+1, n);
+            inp << l <<" "<<r<<'\n';
+        }
         inp.close();
-        return 0;
-        system(("sudo -S ./"+NAME + ".cpp 1111").c_str());
-        system(("sudo -S ./"+NAME + "_trau.cpp 1111").c_str());
+        system(("sudo -S ./"+NAME + ".cpp ").c_str());
+        system(("sudo -S ./"+NAME + "_trau.cpp ").c_str());
         if (system(("diff " + NAME + ".out " + NAME + ".ans").c_str()) != 0)
         {
             cout << "Test " << iTest << ": WRONG!\n";

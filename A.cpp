@@ -8,12 +8,12 @@
 #define fi first
 #define se second
 using namespace std;
-const int N = 1e5+5;
-const int M = 8;
+const int N = 1e6+5;
+const int M = 1e5+5;
 const ll mod = 1e9+7;
 const ll base1 = 517;
 const ll base2 = 311;
-const ll inf = 5e18;
+const ll inf = 1e16;
 
 struct edge{
     int u, v, pu, pv;
@@ -168,29 +168,24 @@ struct BIT3D{
         return total;
     }
 }bit;
-int n, m;
-int a[N][N][N], b[N];
+int n, k, ans;
+int a[N], b[N];
 vector<pii> vi;
 void sol()
 {
-    cin >>  n >> m;
-    bit.init(n);
-    memset(a, 0, sizeof(a));
-    string s;
-    int  x, y, z, x1, y1, z1, v;
-    while(m -- > 0){
+    cin >> n ;
+    for(int i = 1; i <= n; i ++)cin >> a[i];
+    for(int i = 1; i <= n; i ++){
+        int j = i, k = a[i];//gcd cua doan lien tiep [i, j];
+        while(j+1 <= n&& __gcd(a[j+1], k) > 1){
+            ++j;
+            k = __gcd(k, a[j]);
+        }
+        ans = max(ans, j-i+1);
         
-        cin >> s >> x >> y >> z;
-        if(s[0] == 'U'){
-            cin >> v;
-            bit.add(x, y, z, v-a[x][y][z]);
-            a[x][y][z]=v;
-        }
-        else{
-            cin >> x1 >> y1 >> z1;
-            cout << bit.get(x, y, z, x1, y1, z1) << '\n';
-        }
     }
+    cout << ans;
+
 }
 
 int main()
@@ -205,7 +200,7 @@ int main()
         freopen(task".out", "w", stdout);
     }
     int test = 1;
-    cin >> test;
+    // cin >> test;
     while(test -- > 0)sol();
     return 0;
 }
